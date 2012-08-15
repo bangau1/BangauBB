@@ -1,0 +1,18 @@
+<ul class="breadcrumb">
+    <tmpl_loop name="breadcrumbs">
+        <tmpl_if name="active">
+            <li class="active"><tmpl_var name="name"></li>
+        <tmpl_else>
+            <li>
+                <tmpl_if name="link">
+                    <a href="<tmpl_var name="link">">
+                    <tmpl_var name="name">
+                    </a>
+                <tmpl_else>
+                    <tmpl_var name="name">
+                </tmpl_if>
+                <span class="divider">/</span>
+            </li>
+        </tmpl_if>
+    </tmpl_loop>
+</ul>

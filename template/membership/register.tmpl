@@ -1,0 +1,139 @@
+<tmpl_include name="../layout/header.tmpl">
+<!-- Masthead
+================================================== -->
+<!--<header class="jumbotron subhead" id="overview" style="margin:100px;">
+  <h1>Register</h1>
+  <p class="lead">A preview of changes in this swatch.</p>
+</header>
+-->
+
+<div class="container" style="margin-top:80px">
+    <tmpl_include name="../layout/breadcrumbs.tmpl">
+    <!-- Forms
+================================================== -->
+<section id="forms">
+    
+  <div class="page-header">
+    <h1>Register</h1>
+  </div>
+
+  <div class="row">
+    <div class="span7 offset1">
+
+	<!--    <form class="well form-search">
+	      <input type="text" class="input-medium search-query">
+	      <button type="submit" class="btn">Search</button>
+	    </form>
+
+        <form class="well form-search">
+          <input type="text" class="input-small" placeholder="Email">
+          <input type="password" class="input-small" placeholder="Password">
+          <button type="submit" class="btn">Go</button>
+        </form>
+        -->
+
+
+      <form class="form-horizontal well" method="post" id="form_reg">
+        
+        <fieldset>
+          <!--<legend>Controls Bootstrap supports</legend>-->
+          <input type="hidden" name="rm" value="register_post"/>
+          <div class="control-group" id="div_username">
+            <label class="control-label" for="input_username">Username</label>
+            <div class="controls">
+              <input name="username" type="text" class="input-xlarge" id="input_username" placeholder="min. 6 chars">
+            </div>
+          </div>
+          <div class="control-group" id="div_password">
+            <label class="control-label" for="input_password">Password</label>
+            <div class="controls">
+              <input name="password" type="password" class="input-xlarge" id="input_password" placeholder="password">
+              <p class="help-block">*Minimal 6 characters, containing at least 1 numeric and 1 letter </p>
+            </div>
+          </div>
+          <div class="control-group" id="div_cpassword">
+            <label class="control-label" for="input_conf_password">Confirmed Password</label>
+            <div class="controls">
+              <input name="confirmed_password" type="password" class="input-xlarge" id="input_conf_password" placeholder="confirmed password">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input_role">Select Role</label>
+            <div class="controls">
+              <select id="input_role" name="role">
+                <option>User</option>
+                <option>Admin</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button id="btn_register" type="submit" class="btn btn-primary disabled" >Register</button>
+          </div>
+          <tmpl_if name="error_message">
+            <div class="alert alert-error">
+            <a class="close">×</a>
+            <strong>Error</strong> Change a few things up and try submitting again.
+            </div>
+          </tmpl_if>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+</section>
+
+</div>
+<script>
+    function check_all(){
+        var usr = $("#input_username").attr('value');
+        var pass = $("#input_password").attr('value');
+        var cpass = $("#input_conf_password").attr('value');
+        var flag = true;
+        
+        $("#div_username").removeClass('success error warning');
+        $("#div_password").removeClass('success error warning');
+        $("#div_cpassword").removeClass('success error warning');
+        
+        if(usr.length < 4 || usr.length > 12){
+            $("#div_username").removeClass('success').addClass('error');
+            flag =false;
+        }
+        if(pass.length < 6 || !/\d/.test(pass) || !/[a-zA-Z]+/.test(pass)){
+            $("#div_password").removeClass('success').addClass('error');
+            flag = false;
+        }
+        if(cpass !== pass){
+            $("#div_cpassword").removeClass('success').addClass('error');
+            flag = false;
+        }
+        if(flag){
+            $("#btn_register").removeClass('disabled');
+            $("#div_username").addClass('success');
+            $("#div_password").addClass('success');
+            $("#div_cpassword").addClass('success');
+        }else{
+            $("#btn_register").addClass('disabled');
+        }
+    }
+    $("#form_reg").ready(
+      function(){
+        $("#input_username").change(function(){
+            check_all();
+        });
+        
+        $("#input_password").change(function(){
+            check_all();
+        });
+        
+        $("#input_conf_password").change(function(){
+            check_all();
+        });
+        
+        $("#form_reg").keypress(function(e) {
+            if (e.keyCode == 13) return false;
+        });
+      }
+    );
+</script>
+<tmpl_include name="../layout/footer.tmpl">
