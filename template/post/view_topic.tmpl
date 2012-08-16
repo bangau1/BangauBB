@@ -16,12 +16,12 @@
   
   <tmpl_if name="is_admin">
     <div class="table">
-    <a class="btn" href="./index.pl?rm=create_thread">New Thread</a>
+    <a class="btn" href="./index.pl?rm=create_thread&t=<tmpl_var name="topic_id">">New Thread</a>
     </div>
   </tmpl_if>
   <tmpl_if name="is_user">
     <div class="table">
-    <a class="btn" href="./index.pl?rm=create_thread">New Thread</a>  
+    <a class="btn" href="./index.pl?rm=create_thread&t=<tmpl_var name="topic_id">">New Thread</a>
     </div>
   </tmpl_if>
   

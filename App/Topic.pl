@@ -138,7 +138,7 @@ sub view_topic_rm{
     my $topicTitle = $self->dbh->selectrow_array("SELECT title FROM topics WHERE id = ?", {}, ($topicId));
     
     $self->passCredential_Session(\$tmpl);
-    
+    $tmpl->param('topic_id', $topicId);
     $tmpl->param(
         breadcrumbs => [
             { name => "Home", link=>"./index.pl?rm=home"},
@@ -153,9 +153,44 @@ sub view_topic_rm{
 #create thread
 sub create_thread_rm{
     my $self = shift;
+    my $topic_id = $self->query->param('t');
     my $tmpl = $self->load_tmpl('thread/create_thread.tmpl', die_on_bad_params => 0);
+    $tmpl->param('topic_id', $topic_id);
     $self->passCredential_Session(\$tmpl);
     return $tmpl->output();
 }
 
+sub create_thread_post_rm{
+    my $self= shift;
+    my $q = $self->query();
+    my ($title, $post, $topic_id ) = ($q->param('title'), $q->param('post'), $q->param('topic_id'));
+    my $status = undef;
+    #return "$title && $post && $topic_id && defined ".$self->session->param('uid');
+    if($title && $post && $topic_id && defined $self->session->param('uid')){
+        my $stmt = $self->dbh->prepare("INSERT INTO threads(title, post, date_created, date_modified, topic_id, creator_id) VALUES(?, ?, ?, ?, ?, ?)")
+            or die $self->dbh->errstr;
+        my $datetime = &toDateTime;
+        #return "($title, $post, $datetime, $topic_id, $self->session->param('uid'))";
+        $status = $stmt->execute($title, $post, $datetime, $datetime, $topic_id, $self->session->param('uid'));
+        $self->dbh->commit();
+    }
+    
+    my $thread_id = undef;
+    if($status){
+        $thread_id = $self->dbh->selectrow_array("SELECT LAST_INSERT_ID()") or die $self->dbh->errstr;
+        $self->redirect("./index.pl?rm=view_thread&t=$thread_id");
+    }else{
+        die "fail";
+    }
+}
+
+#view thread
+sub view_thread_rm{
+    my $self = shift;
+    my $thread_id = $self->query->param('t');
+    
+    my $tmpl = $self->load_tmpl('thread/view_thread.tmpl', die_on_bad_params => 0);
+    $self->passCredential_Session(\$tmpl);
+    return $tmpl->output();
+}
 1;

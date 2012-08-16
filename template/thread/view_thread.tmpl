@@ -11,83 +11,84 @@
     <tmpl_include name="../layout/breadcrumbs.tmpl">
     <!-- Forms
 ================================================== -->
-<section id="forms">
+<section id="column">
     
-  <div class="page-header">
-    <h1>Create New Thread</h1>
-  </div>
-
-  <div class="row">
-    <div class="span7 offset1">
-
-	<!--    <form class="well form-search">
-	      <input type="text" class="input-medium search-query">
-	      <button type="submit" class="btn">Search</button>
-	    </form>
-
-        <form class="well form-search">
-          <input type="text" class="input-small" placeholder="Email">
-          <input type="password" class="input-small" placeholder="Password">
-          <button type="submit" class="btn">Go</button>
-        </form>
-        -->
-
-
-      <form class="form-horizontal well" method="post" id="form_reg">
+  <div class="row" id="div-thread">
+    <table class="table well">
+      <tbody>
+        <tr>
+          <td>
+            2012-10-10, 13:23 PM
+          </td>
+          <td style="text-align: right" colspan="2">
+            <a href="#">#3(Post ID)</a>
+          </td>
+        </tr>
         
-        <fieldset>
-          <!--<legend>Controls Bootstrap supports</legend>-->
-          <input type="hidden" name="rm" value="create_topic_post"/>
-          <div class="control-group" id="div_title">
-            <label class="control-label" for="input_title">Title</label>
-            <div class="controls">
-              <input name="title" type="text" class="input-xlarge" id="input_title" placeholder="Min. 4 chars">
-            </div>
-          </div>          
-          <div class="form-actions">
-            <button id="btn_register" type="submit" class="btn btn-primary disabled" >Create</button>
-          </div>
-          <tmpl_if name="error_message">
-            <div class="alert alert-error">
-            <a class="close">×</a>
-            <strong>Error</strong> Change a few things up and try submitting again.
-            </div>
-          </tmpl_if>
-        </fieldset>
-      </form>
-    </div>
+        <!-- USER DATA-->
+        <tr valign="top">
+          <td>
+            <h4>agp12</h4>
+            <h6>admin/user/guest</h6>
+          </td>
+          <td>
+            <div class="span5"/>
+          </td>
+          <td style="text-align: right">
+            
+              <h6>Join Date: 2012/23/12312</h6>
+              <h6>Post: 23</h6>
+              <h6>thread:23</h6>
+            
+          </td>
+        </tr>
+        <!--/USER DATA-->
+        
+        <!--MESSAGE BODY-->
+        <tr>
+          <td  colspan="3">
+            <h3>Title</h3>
+            <p>
+              asdasdasd
+              asdas
+              das
+              dasd
+              
+            </p>
+          </td>
+        </tr>
+        <!--/MESSAGE BODY-->
+        <!--MESSAGE BODY-->
+        <tr>
+          <td colspan="3">
+            <a href="#" class="btn btn-success btn-xlarge">
+              <i class="icon-pencil icon-xlarge"></i>
+              Edit
+            </a>
+            <a href="#" class="btn btn-danger btn-xlarge">
+              <i class="icon-trash icon-xlarge"></i>
+              Delete
+            </a>
+            <a href="#" class="btn btn-primary btn-xlarge">
+              <i class="icon-comment icon-xlarge"></i>
+              Reply
+            </a>
+          </td>
+        </tr>
+        <!--/MESSAGE BODY-->
+      </tbody>
+      
+    </table>
   </div>
+  <tmpl_loop name="posts">
+    <div class="row">
+      
+    </div>
+  </tmpl_loop>
+  
 
 </section>
 
 </div>
-<script>
-    function check_all(){
-        var usr = $("#input_title").attr('value');
-        var flag = true;
-        
-        $("#div_title").removeClass('success error warning');;
-        
-        if(usr.length < 4){
-            $("#div_title").removeClass('success').addClass('error');
-            flag =false;
-        }
-        if(flag){
-            $("#btn_register").removeClass('disabled');
-            $("#div_title").addClass('success');
-        }else{
-            $("#btn_register").addClass('disabled');
-        }
-    }
-    $("#form_reg").ready(
-      function(){
-        $("#input_title").change(function(){
-            check_all();
-        });
-        $("#form_reg").keypress(function(e) {
-            if (e.keyCode == 13) return false;
-        });
-      }
-    );
-</script>
 <tmpl_include name="../layout/footer.tmpl">
+  

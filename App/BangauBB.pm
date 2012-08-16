@@ -29,6 +29,8 @@ sub setup{
         
         #thread
         'create_thread' => 'create_thread_rm',
+        'create_thread_post' => 'create_thread_post_rm',
+        'view_thread' => 'view_thread_rm',
     );
     $self->start_mode('home');
 }
@@ -79,6 +81,14 @@ sub toDateTime{
 sub passCredential_Session{
     my $self = shift;
     my $templRef = shift;
+    #apply theme from param
+    if($self->query->param('theme')){
+        ${$templRef}->param('theme', $self->query->param('theme'));
+        $self->session->param('theme',$self->query->param('theme'));
+    }elsif($self->session->param('theme')){
+        ${$templRef}->param('theme', $self->session->param('theme'));
+    }
+    
     if($self->session->param('user')){
         ${$templRef}->param('user', $self->session->param('user'));
         ${$templRef}->param('role', $self->session->param('role'));
@@ -90,6 +100,7 @@ sub passCredential_Session{
         }
         return 1;
     }
+    
     return 0;
 }
 
