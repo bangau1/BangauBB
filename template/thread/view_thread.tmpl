@@ -9,90 +9,85 @@
 
 <div class="container" style="margin-top:80px">
     <tmpl_include name="../layout/breadcrumbs.tmpl">
-    <section id="buttons">
+    <!-- Forms
+================================================== -->
+<section id="forms">
+    
   <div class="page-header">
-    <h1><tmpl_var name="topic_title"></h1>
+    <h1>Create New Thread</h1>
   </div>
-  
-  <tmpl_if name="is_admin">
-    <div class="table">
-    <a class="btn" href="./index.pl?rm=create_thread">New Thread</a>
-    </div>
-  </tmpl_if>
-  <tmpl_if name="is_user">
-    <div class="table">
-    <a class="btn" href="./index.pl?rm=create_thread">New Thread</a>  
-    </div>
-  </tmpl_if>
-  
-  
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr style="">
-        <th>Thread</th>
-        <th>Latest Reply</th>
-        <th>Total Reply</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tmpl_loop name="threads">
-            <tr>
-                <td>
-                <a href="<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
-                </br>
-                by <a href="./index.pl?rm=view_user&amp;username=<tmpl_var name="thread_creator_username">"><tmpl_var name="thread_creator_username"></a>
-                <br/>
-                <tmpl_var name="thread_date_created">
-                </td>
-                <td>
-                <tmpl_if name="latest_post_id">
-                    <a href="<tmpl_var name="latest_post_id">"><tmpl_var name="latest_post_title"></a>
-                    <br/>
-                    by <tmpl_if name="latest_post_creator_username">
-                            <a href="#"><tmpl_var name="latest_post_creator_username">></a>
-                        <tmpl_else>
-                            guest
-                        </tmpl_if>
-                    <br/>
-                    <tmpl_var name="latest_post_date_created">
-                <tmpl_else>
-                    スレッドがありません
-                </tmpl_if>
-                </td>
-                <td>
-                    <tmpl_var total_reply default="0">
-                </td>
-            </tr>
-        </tmpl_loop>
-        
-      <!--
-      <tr>
-        <td><a class="btn btn-inverse" href="#">Inverse</a></td>
-        <td><a class="btn btn-inverse btn-large" href="#">Inverse</a></td>
-        <td><a class="btn btn-inverse btn-small" href="#">Inverse</a></td>
-        <td><a class="btn btn-inverse disabled" href="#">Inverse</a></td>
-        <td><a class="btn btn-inverse" href="#"><i class="icon-random icon-white"></i> Inverse</a></td>
-        <td>
-        <div class="btn-group">
-          <a class="btn btn-inverse" href="#">Inverse</a>
-          <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </div>>
-        </td>
-      </tr>
+
+  <div class="row">
+    <div class="span7 offset1">
+
+	<!--    <form class="well form-search">
+	      <input type="text" class="input-medium search-query">
+	      <button type="submit" class="btn">Search</button>
+	    </form>
+
+        <form class="well form-search">
+          <input type="text" class="input-small" placeholder="Email">
+          <input type="password" class="input-small" placeholder="Password">
+          <button type="submit" class="btn">Go</button>
+        </form>
         -->
-    </tbody>
-  </table>
-  <br/>
-  <tmpl_include name="../layout/pagination.tmpl">
+
+
+      <form class="form-horizontal well" method="post" id="form_reg">
+        
+        <fieldset>
+          <!--<legend>Controls Bootstrap supports</legend>-->
+          <input type="hidden" name="rm" value="create_topic_post"/>
+          <div class="control-group" id="div_title">
+            <label class="control-label" for="input_title">Title</label>
+            <div class="controls">
+              <input name="title" type="text" class="input-xlarge" id="input_title" placeholder="Min. 4 chars">
+            </div>
+          </div>          
+          <div class="form-actions">
+            <button id="btn_register" type="submit" class="btn btn-primary disabled" >Create</button>
+          </div>
+          <tmpl_if name="error_message">
+            <div class="alert alert-error">
+            <a class="close">×</a>
+            <strong>Error</strong> Change a few things up and try submitting again.
+            </div>
+          </tmpl_if>
+        </fieldset>
+      </form>
+    </div>
+  </div>
 
 </section>
-</div>
 
+</div>
+<script>
+    function check_all(){
+        var usr = $("#input_title").attr('value');
+        var flag = true;
+        
+        $("#div_title").removeClass('success error warning');;
+        
+        if(usr.length < 4){
+            $("#div_title").removeClass('success').addClass('error');
+            flag =false;
+        }
+        if(flag){
+            $("#btn_register").removeClass('disabled');
+            $("#div_title").addClass('success');
+        }else{
+            $("#btn_register").addClass('disabled');
+        }
+    }
+    $("#form_reg").ready(
+      function(){
+        $("#input_title").change(function(){
+            check_all();
+        });
+        $("#form_reg").keypress(function(e) {
+            if (e.keyCode == 13) return false;
+        });
+      }
+    );
+</script>
 <tmpl_include name="../layout/footer.tmpl">

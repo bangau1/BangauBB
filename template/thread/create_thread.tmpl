@@ -14,38 +14,40 @@
 <section id="forms">
     
   <div class="page-header">
-    <h1>Create New Topic</h1>
+    <h1>New Thread</h1>
   </div>
 
   <div class="row">
     <div class="span7 offset1">
-
-	<!--    <form class="well form-search">
-	      <input type="text" class="input-medium search-query">
-	      <button type="submit" class="btn">Search</button>
-	    </form>
-
-        <form class="well form-search">
-          <input type="text" class="input-small" placeholder="Email">
-          <input type="password" class="input-small" placeholder="Password">
-          <button type="submit" class="btn">Go</button>
-        </form>
-        -->
 
 
       <form class="form-horizontal well" method="post" id="form_reg">
         
         <fieldset>
           <!--<legend>Controls Bootstrap supports</legend>-->
-          <input type="hidden" name="rm" value="create_topic_post"/>
+          <input type="hidden" name="rm" value="create_thread_post"/>
+	  <input type="hidden" name="topic_id" value="<tmpl_var name="topic_id">"/>
           <div class="control-group" id="div_title">
-            <label class="control-label" for="input_title">Title</label>
+            <label class="control-label" for="input_title">Title*</label>
             <div class="controls">
-              <input name="title" type="text" class="input-xlarge" id="input_title" placeholder="Min. 4 chars">
+              <input name="title" type="text" class="input-xlarge" id="input_title" placeholder="min. 6 chars, max. 100 chars"/>
             </div>
-          </div>          
+          </div>
+	  <div class="control-group" id="div_post">
+            <label class="control-label" for="input_post">Post*</label>
+            <div class="controls">
+              <textarea name="post" class="input-xlarge" id="input_post" rows="15" placeholder="Post"/></textarea>
+              
+            </div>
+          </div>
+          <div class="control-group" id="div_image">
+            <label class="control-label" for="input_image">Upload Image</label>
+            <div class="controls">
+              <input name="image" type="file" class="input-file" id="input_image" placeholder="Upload image"/>
+            </div>
+          </div>
           <div class="form-actions">
-            <button id="btn_register" type="submit" class="btn btn-primary disabled" >Create</button>
+            <button id="btn_submit" type="submit" class="btn btn-primary disabled" >Submit</button>
           </div>
           <tmpl_if name="error_message">
             <div class="alert alert-error">
@@ -64,19 +66,27 @@
 <script>
     function check_all(){
         var usr = $("#input_title").attr('value');
+        var pass = $("#input_post").attr('value');
         var flag = true;
         
-        $("#div_title").removeClass('success error warning');;
+        $("#div_title").removeClass('success error warning');
+        $("#div_post").removeClass('success error warning');
         
-        if(usr.length < 4){
+        if(usr.length < 6 || usr.length > 100){
             $("#div_title").removeClass('success').addClass('error');
             flag =false;
         }
+        if(pass.length < 25 || pass.length > 100){
+            $("#div_post").removeClass('success').addClass('error');
+            flag = false;
+        }
+       
         if(flag){
-            $("#btn_register").removeClass('disabled');
+            $("#btn_submit").removeClass('disabled');
             $("#div_title").addClass('success');
+            $("#div_post").addClass('success');
         }else{
-            $("#btn_register").addClass('disabled');
+            $("#btn_submit").addClass('disabled');
         }
     }
     $("#form_reg").ready(
@@ -84,8 +94,13 @@
         $("#input_title").change(function(){
             check_all();
         });
+        
+        $("#input_post").change(function(){
+            check_all();
+        });
+        
         $("#form_reg").keypress(function(e) {
-            if (e.keyCode == 13) return false;
+            if (e.keyCode == 13) return '\n';
         });
       }
     );

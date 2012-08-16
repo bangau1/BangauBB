@@ -82,10 +82,80 @@ sub create_topic_post_rm{
     }
 }
 
+sub getSortedThreadsByTopicId{
+    my $self = shift;
+    my $topicId = shift;
+    my $from = shift;
+    my $limit = shift;
+    if(not defined $topicId){
+        die "Topic ID parameter can't empty";
+    }
+    if(not defined $from){
+        $from = 0;
+    }
+    if(not defined $limit){
+        $limit = 10;
+    }
+    
+    my $stmt = $self->dbh->prepare("
+    SELECT
+    td.id as thread_id, td.title as thread_title, u.username as thread_creator_username, td.date_created as thread_date_created,
+    latest_post_id, latest_post_title, latest_post_creator_username,
+    latest_post_date_created
+    FROM threads td left outer join 
+    (
+        select p.thread_id as thread_id, p.id as latest_post_id, p.title as latest_post_title,
+            p.date_created as latest_post_date_created, 
+            u.username as latest_post_creator_username
+        from posts p, users u
+        where p.creator_id = u.id 
+        order by latest_post_date_created DESC
+        LIMIT 0, 1
+    ) p
+    ON p.thread_id = td.id 
+    inner join users u
+    where td.topic_id = $topicId and td.creator_id = u.id
+    ORDER BY latest_post_date_created DESC
+    LIMIT $from, $limit") or die $self->dbh->errstr;
+    $stmt->execute();
+    
+    my @rows = ();
+    push @rows, $_ while $_ = $stmt->fetchrow_hashref();
+    return @rows;
+}
+
 #view topic
 sub view_topic_rm{
     my $self = shift;
+    my $tmpl = $self->load_tmpl('post/view_topic.tmpl',  die_on_bad_params => 0);
+    my $topicId = $self->query->param('topic_id');
     
+    if(not defined $topicId){
+        $self->redirect("./index.pl?rm=home");
+        return;
+    }
+    
+    my $topicTitle = $self->dbh->selectrow_array("SELECT title FROM topics WHERE id = ?", {}, ($topicId));
+    
+    $self->passCredential_Session(\$tmpl);
+    
+    $tmpl->param(
+        breadcrumbs => [
+            { name => "Home", link=>"./index.pl?rm=home"},
+            { name => $topicTitle, active => "true"},
+        ]
+    );
+    my @rows = $self->getSortedThreadsByTopicId($topicId, 0, 10);
+    $tmpl->param(threads => \@rows);
+    return $tmpl->output();
+}
+
+#create thread
+sub create_thread_rm{
+    my $self = shift;
+    my $tmpl = $self->load_tmpl('thread/create_thread.tmpl', die_on_bad_params => 0);
+    $self->passCredential_Session(\$tmpl);
+    return $tmpl->output();
 }
 
 1;

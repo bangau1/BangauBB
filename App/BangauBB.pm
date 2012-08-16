@@ -26,6 +26,9 @@ sub setup{
         'create_topic' => 'create_topic_rm',
         'create_topic_post' => 'create_topic_post_rm',
         'view_topic' => 'view_topic_rm',
+        
+        #thread
+        'create_thread' => 'create_thread_rm',
     );
     $self->start_mode('home');
 }
