@@ -1,0 +1,93 @@
+<tmpl_include name="../layout/header.tmpl">
+<!-- Masthead
+================================================== -->
+<!--<header class="jumbotron subhead" id="overview" style="margin:100px;">
+  <h1>Register</h1>
+  <p class="lead">A preview of changes in this swatch.</p>
+</header>
+-->
+
+<div class="container" style="margin-top:80px">
+    <tmpl_include name="../layout/breadcrumbs.tmpl">
+    <!-- Forms
+================================================== -->
+<section id="forms">
+    
+  <div class="page-header">
+    <h1>Create New Topic</h1>
+  </div>
+
+  <div class="row">
+    <div class="span7 offset1">
+
+	<!--    <form class="well form-search">
+	      <input type="text" class="input-medium search-query">
+	      <button type="submit" class="btn">Search</button>
+	    </form>
+
+        <form class="well form-search">
+          <input type="text" class="input-small" placeholder="Email">
+          <input type="password" class="input-small" placeholder="Password">
+          <button type="submit" class="btn">Go</button>
+        </form>
+        -->
+
+
+      <form class="form-horizontal well" method="post" id="form_reg">
+        
+        <fieldset>
+          <!--<legend>Controls Bootstrap supports</legend>-->
+          <input type="hidden" name="rm" value="create_topic_post"/>
+          <div class="control-group" id="div_title">
+            <label class="control-label" for="input_title">Title</label>
+            <div class="controls">
+              <input name="title" type="text" class="input-xlarge" id="input_title" placeholder="Min. 4 chars">
+            </div>
+          </div>          
+          <div class="form-actions">
+            <button id="btn_register" type="submit" class="btn btn-primary disabled" >Create</button>
+          </div>
+          <tmpl_if name="error_message">
+            <div class="alert alert-error">
+            <a class="close">×</a>
+            <strong>Error</strong> Change a few things up and try submitting again.
+            </div>
+          </tmpl_if>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+</section>
+
+</div>
+<script>
+    function check_all(){
+        var usr = $("#input_title").attr('value');
+        var flag = true;
+        
+        $("#div_title").removeClass('success error warning');;
+        
+        if(usr.length < 4){
+            $("#div_title").removeClass('success').addClass('error');
+            flag =false;
+        }
+        if(flag){
+            $("#btn_register").removeClass('disabled');
+            $("#div_title").addClass('success');
+        }else{
+            $("#btn_register").addClass('disabled');
+        }
+    }
+    $("#form_reg").ready(
+      function(){
+        $("#input_title").change(function(){
+            check_all();
+        });
+        $("#form_reg").keypress(function(e) {
+            if (e.keyCode == 13) return false;
+        });
+      }
+    );
+</script>
+<tmpl_include name="../layout/footer.tmpl">

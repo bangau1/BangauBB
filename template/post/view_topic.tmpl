@@ -11,44 +11,56 @@
     <tmpl_include name="../layout/breadcrumbs.tmpl">
     <section id="buttons">
   <div class="page-header">
-    <h1>Topic</h1>
+    <h1><tmpl_var name="topic_title"></h1>
   </div>
+  
   <tmpl_if name="is_admin">
     <div class="table">
-    <a class="btn" href="./index.pl?rm=create_topic">New Topic</a>  
-    </div>  
+    <a class="btn" href="./index.pl?rm=create_thread">New Thread</a>
+    </div>
+  </tmpl_if>
+  <tmpl_if name="is_user">
+    <div class="table">
+    <a class="btn" href="./index.pl?rm=create_thread">New Thread</a>  
+    </div>
   </tmpl_if>
   
   
   <table class="table table-bordered table-striped">
     <thead>
       <tr style="">
-        <th>Topic</th>
-        <th>Latest Modified</th>
-        <th>Total Thread</th>
+        <th>Thread</th>
+        <th>Latest Reply</th>
+        <th>Total Reply</th>
       </tr>
     </thead>
     <tbody>
-        <tmpl_loop name="topics">
+        <tmpl_loop name="threads">
             <tr>
                 <td>
-                <a href="<tmpl_var name="topic_id">"><tmpl_var name="topic_title"></a>    
+                <a href="<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
+                </br>
+                by <a href="./index.pl?rm=view_user&amp;username=<tmpl_var name="thread_creator_username">"><tmpl_var name="thread_creator_username"></a>
+                <br/>
+                <tmpl_var name="thread_date_created">
                 </td>
                 <td>
-                <tmpl_if name="thread_title">
-                    <a href="<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
+                <tmpl_if name="latest_post_id">
+                    <a href="<tmpl_var name="latest_post_id">"><tmpl_var name="latest_post_title"></a>
                     <br/>
-                    by <tmpl_if name="user">
-                            <a href="#"><tmpl_var name="user">></a>
+                    by <tmpl_if name="latest_post_creator_username">
+                            <a href="#"><tmpl_var name="latest_post_creator_username">></a>
                         <tmpl_else>
                             guest
                         </tmpl_if>
+                    <br/>
+                    <tmpl_var name="latest_post_date_created">
                 <tmpl_else>
                     スレッドがありません
                 </tmpl_if>
                 </td>
                 <td>
-                    <tmpl_var total_thread default="0">
+                    <tmpl_var total_reply default="0">
                 </td>
             </tr>
         </tmpl_loop>
