@@ -38,7 +38,7 @@
         <tmpl_loop name="threads">
             <tr>
                 <td>
-                <a href="<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
+                <a href="./index.pl?rm=view_thread&amp;t=<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
                 </br>
                 by <a href="./index.pl?rm=view_user&amp;username=<tmpl_var name="thread_creator_username">"><tmpl_var name="thread_creator_username"></a>
                 <br/>
@@ -46,10 +46,10 @@
                 </td>
                 <td>
                 <tmpl_if name="latest_post_id">
-                    <a href="<tmpl_var name="latest_post_id">"><tmpl_var name="latest_post_title"></a>
+                    <a href="./index.pl?rm=view_thread&amp;t=<tmpl_var thread_id>#div-post-<tmpl_var name="latest_post_id">"><tmpl_var latest_post_title default="No Post Title"></a>
                     <br/>
                     by <tmpl_if name="latest_post_creator_username">
-                            <a href="#"><tmpl_var name="latest_post_creator_username">></a>
+                            <a href="#"><tmpl_var name="latest_post_creator_username"></a>
                         <tmpl_else>
                             guest
                         </tmpl_if>

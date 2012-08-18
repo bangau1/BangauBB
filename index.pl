@@ -37,6 +37,11 @@ my $board = BangauBB->new(
         'db_attr' => { mysql_enable_utf8 => 1, RaiseError => 1, AutoCommit => 0 },
         'db_source' => 'DBI:mysql:database=bangaubb;host=localhost;port=3306',
         'image_dir' => '/home/agung/BangauBB/image_dir/',
+        'guest_id' => 1,
+        'topics_per_page' => 5,
+        'threads_per_page' => 5,
+        'posts_per_page' => 10,
+        'page_per_pagination' => 2,
     }
 );
 

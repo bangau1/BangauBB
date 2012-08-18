@@ -26,6 +26,7 @@
         <th>Topic</th>
         <th>Latest Modified</th>
         <th>Total Thread</th>
+        <th>Total Post</th>
       </tr>
     </thead>
     <tbody>
@@ -39,16 +40,21 @@
                     <a href="./index.pl?rm=view_thread&amp;t=<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
                     <br/>
                     by <tmpl_if name="user">
-                            <a href="#"><tmpl_var name="user">></a>
+                            <a href="#"><tmpl_var name="user"></a>
                         <tmpl_else>
                             guest
                         </tmpl_if>
+                    </br>
+                    <tmpl_var date_modified>
                 <tmpl_else>
                     スレッドがありません
                 </tmpl_if>
                 </td>
                 <td>
                     <tmpl_var total_thread default="0">
+                </td>
+                <td>
+                    <tmpl_var total_post default="0">
                 </td>
             </tr>
         </tmpl_loop>

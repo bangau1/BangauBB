@@ -12,34 +12,39 @@
     <!-- Forms
 ================================================== -->
 <section id="column">
-    
-  <div class="row" id="div-thread">
+  <tmpl_loop name="threads">
+  <div class="table" id="div-thread-<tmpl_var thread_id>">
     <table class="table well">
       <tbody>
         <tr>
           <td>
-            2012-10-10, 13:23 PM
+            <tmpl_var thread_date_created>
           </td>
           <td style="text-align: right" colspan="2">
-            <a href="#">#3(Post ID)</a>
+            <a href="./index.pl?rm=view_thread&amp;single_post=true&amp;t=<tmpl_var name="thread_id">">#Permalink</a>
           </td>
         </tr>
         
         <!-- USER DATA-->
         <tr valign="top">
           <td>
-            <h4>agp12</h4>
-            <h6>admin/user/guest</h6>
+            <h4><tmpl_var name="thread_creator_username"></h4>
+            
+            <tmpl_if name="is_guest">
+              <!-- nothing -->
+            <tmpl_else>
+              
+              <h6><tmpl_var name="thread_creator_role"></h6>
+            </tmpl_if>
           </td>
           <td>
             <div class="span5"/>
           </td>
           <td style="text-align: right">
-            
-              <h6>Join Date: 2012/23/12312</h6>
-              <h6>Post: 23</h6>
-              <h6>thread:23</h6>
-            
+              <h6>Join Date: <tmpl_var name="thread_creator_date_created"></h6>
+              <h6>Post: <tmpl_var name="thread_creator_total_post"></h6>
+              <h6>thread: <tmpl_var name="thread_creator_total_thread"></h6>
+              
           </td>
         </tr>
         <!--/USER DATA-->
@@ -47,29 +52,32 @@
         <!--MESSAGE BODY-->
         <tr>
           <td  colspan="3">
-            <h3>Title</h3>
+            <h3><tmpl_var name="thread_title"></h3>
             <p>
-              asdasdasd
-              asdas
-              das
-              dasd
-              
+              <tmpl_var name="thread_post">
             </p>
           </td>
         </tr>
         <!--/MESSAGE BODY-->
         <!--MESSAGE BODY-->
         <tr>
-          <td colspan="3">
-            <a href="#" class="btn btn-success btn-xlarge">
-              <i class="icon-pencil icon-xlarge"></i>
-              Edit
-            </a>
-            <a href="#" class="btn btn-danger btn-xlarge">
-              <i class="icon-trash icon-xlarge"></i>
-              Delete
-            </a>
-            <a href="#" class="btn btn-primary btn-xlarge">
+          <td colspan="3" style="text-align: right">
+              
+            <!-- EDIT FEATURE -->
+            <!--
+                <a hhref="./index.pl?rm=edit_thread&amp;t=<tmpl_var name="thread_id">" class="btn btn-success btn-xlarge">
+                <i class="icon-pencil icon-xlarge"></i>
+                Edit
+              </a>
+            -->
+            <tmpl_if can_delete>
+              <a href="./index.pl?rm=delete_thread&amp;t=<tmpl_var name="thread_id">" class="btn btn-danger btn-xlarge">
+                <i class="icon-trash icon-xlarge"></i>
+                Delete
+              </a>
+                
+            </tmpl_if>
+            <a href="./index.pl?rm=create_reply&amp;t=<tmpl_var name="thread_id">" class="btn btn-primary btn-xlarge">
               <i class="icon-comment icon-xlarge"></i>
               Reply
             </a>
@@ -80,10 +88,79 @@
       
     </table>
   </div>
+  </tmpl_loop>
   <tmpl_loop name="posts">
-    <div class="row">
+    <div class="table" id="div-post-<tmpl_var name="post_id">">
+    <table class="table well">
+      <tbody>
+        <tr>
+          <td>
+            <tmpl_var name="post_date_created">
+          </td>
+          <td style="text-align: right" colspan="2">
+            <a href="./index.pl?rm=view_post&amp;single_post=true&amp;p=<tmpl_var name="post_id">">#Permalink</a>
+          </td>
+        </tr>
+        
+        <!-- USER DATA-->
+        <tr valign="top">
+          <td>
+            <h4><tmpl_var name="post_creator_username"></h4>
+            <tmpl_if name="is_guest">
+              <!-- nothing -->
+            <tmpl_else>
+              <h6><tmpl_var name="post_creator_role"></h6>
+            </tmpl_if>
+          </td>
+          <td>
+            <div class="span5"/>
+          </td>
+          <td style="text-align: right">
+              <h6>Join Date: <tmpl_var name="post_creator_date_created"></h6>
+              <h6>Post: <tmpl_var name="post_creator_total_post"></h6>
+              <h6>thread: <tmpl_var name="post_creator_total_thread"></h6>
+              
+          </td>
+        </tr>
+        <!--/USER DATA-->
+        
+        <!--MESSAGE BODY-->
+        <tr>
+          <td  colspan="3">
+            <h3><tmpl_var name="post_title"></h3>
+            <p>
+              <tmpl_var name="post_post">
+            </p>
+          </td>
+        </tr>
+        <!--/MESSAGE BODY-->
+        <!--MESSAGE BODY-->
+        <tr>
+          <td colspan="3" style="text-align: right">
+            
+            <!-- EDIT FEATURE -->
+            <!--<a hhref="./index.pl?rm=edit_post&amp;p=<tmpl_var name="post_id">" class="btn btn-success btn-xlarge">
+              <i class="icon-pencil icon-xlarge"></i>
+              Edit
+            </a>-->
+            <tmpl_if can_delete>
+            <a href="./index.pl?rm=delete_reply&amp;p=<tmpl_var name="post_id">" class="btn btn-danger btn-xlarge">
+              <i class="icon-trash icon-xlarge"></i>
+              Delete
+            </a>
+            </tmpl_if>
+            
+            <a href="./index.pl?rm=create_reply&amp;t=<tmpl_var name="thread_id">" class="btn btn-primary btn-xlarge">
+              <i class="icon-comment icon-xlarge"></i>
+              Reply
+            </a>
+          </td>
+        </tr>
+        <!--/MESSAGE BODY-->
+      </tbody>
       
-    </div>
+    </table>
+  </div>
   </tmpl_loop>
   
 

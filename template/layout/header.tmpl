@@ -39,7 +39,7 @@
         </a>
         <a class="brand" href="./index.pl">BangauBB - Bulletin Board</a>
         <div class="nav-collapse">
-          <ul class="nav">
+         <!-- <ul class="nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -54,13 +54,15 @@
             <li><a href="#">Link</a></li>
             <li><a href="#">Link</a></li>
             <li><a href="#">Link</a></li>
-            -->
+        
           </ul>
+            -->
           <div class="nav pull-right">
           
               <form class="navbar-search" method="post">
+                
                 <tmpl_if name="user">
-                    Welcome, <tmpl_var name="user">&amp; <tmpl_var name="uid">
+                    Welcome, <tmpl_var name="user">
                     <a href="./index.pl?rm=logout" class="btn btn-danger">Logout</a>
                 <tmpl_else>
                     Welcome, Guest!

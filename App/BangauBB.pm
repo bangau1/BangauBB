@@ -31,6 +31,14 @@ sub setup{
         'create_thread' => 'create_thread_rm',
         'create_thread_post' => 'create_thread_post_rm',
         'view_thread' => 'view_thread_rm',
+        'delete_thread' => 'delete_thread_rm',
+        'delete_thread_post' => 'delete_thread_post_rm',
+        
+        #reply
+        'create_reply' => 'create_reply_rm',
+        'create_reply_post' => 'create_reply_post_rm',
+        'delete_reply' => 'delete_reply_rm',
+        'delete_reply_post' => 'delete_reply_post_rm',
     );
     $self->start_mode('home');
 }
@@ -83,24 +91,25 @@ sub passCredential_Session{
     my $templRef = shift;
     #apply theme from param
     if($self->query->param('theme')){
-        ${$templRef}->param('theme', $self->query->param('theme'));
+        $templRef->param('theme' => $self->query->param('theme'));
         $self->session->param('theme',$self->query->param('theme'));
     }elsif($self->session->param('theme')){
-        ${$templRef}->param('theme', $self->session->param('theme'));
+        $templRef->param('theme' => $self->session->param('theme'));
     }
-    
+    unless (defined $self->session->param('role')){
+        $self->session->param('role', 'g');
+    }
+    given($self->session->param('role')){
+        when('a'){ $templRef->param('is_admin' => 'true')}
+        when('u'){ $templRef->param('is_user' => 'true')}
+        default {$templRef->param('is_guest' => 'true')};
+    }
     if($self->session->param('user')){
-        ${$templRef}->param('user', $self->session->param('user'));
-        ${$templRef}->param('role', $self->session->param('role'));
-        ${$templRef}->param('uid', $self->session->param('uid'));
-        given($self->session->param('role')){
-            when('a'){ ${$templRef}->param('is_admin', 'true')}
-            when('u'){ ${$templRef}->param('is_user', 'true')}
-            when('g'){ ${$templRef}->param('is_guest', 'true')}
-        }
+        $templRef->param('user' => $self->session->param('user'));
+        $templRef->param('role' => $self->session->param('role'));
+        $templRef->param('uid' => $self->session->param('uid'));
         return 1;
     }
-    
     return 0;
 }
 

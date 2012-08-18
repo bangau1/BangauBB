@@ -13,8 +13,8 @@ sub register_rm{
             { name => "Register", link=>"./index.pl?rm=register", active=>"true"},
         ]
     );
-    if($self->passCredential_Session(\$tmpl)){
-       $self->redirect('./index.pl?rm=home');
+    if($self->session->param('uid')){
+        $self->redirect('./index.pl?rm=home');
     }else{
         return $tmpl->output();    
     }

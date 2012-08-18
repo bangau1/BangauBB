@@ -1,0 +1,98 @@
+<tmpl_include name="../layout/header.tmpl">
+<!-- Masthead
+================================================== -->
+<!--<header class="jumbotron subhead" id="overview" style="margin:100px;">
+  <h1>Register</h1>
+  <p class="lead">A preview of changes in this swatch.</p>
+</header>
+-->
+
+<div class="container" style="margin-top:80px">
+    <tmpl_include name="../layout/breadcrumbs.tmpl">
+    <!-- Forms
+================================================== -->
+<section id="forms">
+    
+  <div class="page-header">
+    <h1>Reply</h1>
+  </div>
+
+  <div class="row">
+    <div class="span7 offset1">
+
+
+      <form class="form-horizontal well" method="POST" id="form_reg">
+        
+        <fieldset>
+          <!--<legend>Controls Bootstrap supports</legend>-->
+          <input type="hidden" name="rm" value="create_reply_post"/>
+	  <input type="hidden" name="thread_id" value="<tmpl_var name="thread_id">">
+          <div class="control-group" id="div_title">
+            <label class="control-label" for="input_title">Title</label>
+            <div class="controls">
+              <input name="title" type="text" class="input-xlarge" id="input_title" />
+            </div>
+          </div>
+	  <div class="control-group" id="div_post">
+            <label class="control-label" for="input_post">Post*</label>
+            <div class="controls">
+              <textarea name="post" class="input-xlarge" id="input_post" rows="15" placeholder="Post"/></textarea>
+              
+            </div>
+          </div>
+          <div class="control-group" id="div_image">
+            <label class="control-label" for="input_image">Upload Image</label>
+            <div class="controls">
+              <input name="image" type="file" class="input-file" id="input_image" placeholder="Upload image"/>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button id="btn_submit" type="submit" class="btn btn-primary disabled" >Submit</button>
+          </div>
+          <tmpl_if name="error_message">
+            <div class="alert alert-error">
+            <a class="close">×</a>
+            <strong>Error</strong> Change a few things up and try submitting again.
+            </div>
+          </tmpl_if>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+</section>
+
+</div>
+<script>
+    function check_all(){
+        var pass = $("#input_post").attr('value');
+        var flag = true;
+        
+        $("#div_post").removeClass('success error warning');
+        
+        if(pass.length < 5|| pass.length > 100){
+            $("#div_post").removeClass('success').addClass('error');
+            flag = false;
+        }
+       
+        if(flag){
+            $("#btn_submit").removeClass('disabled');
+            $("#div_post").addClass('success');
+        }else{
+            $("#btn_submit").addClass('disabled');
+        }
+    }
+    $("#form_reg").ready(
+      function(){
+        
+        $("#input_post").change(function(){
+            check_all();
+        });
+        
+        $("#form_reg").keypress(function(e) {
+            if (e.keyCode == 13) return '\n';
+        });
+      }
+    );
+</script>
+<tmpl_include name="../layout/footer.tmpl">
