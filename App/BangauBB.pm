@@ -5,6 +5,9 @@ use strict;
 use base qw (CGI::Application);
 use CGI::Application::Plugin::DBH (qw/dbh_config dbh/);
 use CGI::Application::Plugin::Session;
+use DateTime;
+use URI::Find;
+use CGI qw(escapeHTML);
 
 sub setup{
     my $self = shift;
@@ -29,6 +32,7 @@ sub setup{
         
         #thread
         'create_thread' => 'create_thread_rm',
+        'create_thread_confirm' => 'create_thread_confirm_rm',
         'create_thread_post' => 'create_thread_post_rm',
         'view_thread' => 'view_thread_rm',
         'delete_thread' => 'delete_thread_rm',
@@ -36,6 +40,7 @@ sub setup{
         
         #reply
         'create_reply' => 'create_reply_rm',
+        'create_reply_confirm' => 'create_reply_confirm_rm',
         'create_reply_post' => 'create_reply_post_rm',
         'delete_reply' => 'delete_reply_rm',
         'delete_reply_post' => 'delete_reply_post_rm',
@@ -113,7 +118,59 @@ sub passCredential_Session{
     return 0;
 }
 
+sub filter_body_message{
+    my $body = shift;
+    my $finder = URI::Find->new(sub {
+      my($uri, $orig_uri) = @_;
+      return qq|<a href="$uri">$orig_uri</a>|;
+    });
+    $finder->find(\$body, \&escapeHTML);
+
+    
+    $body =~ s/(\S+@\S+\.\S+)(.+)/<a href=\"mailto:$1\">$1<\/a>/g;
+    
+    $body =~ s/\r\n/ <br\/> /g;
+    $body =~ s/\n/ <br\/> /g;
+    return $body;
+    
+}
+
+sub upload_image{
+    my $self = shift;
+    my ($image, $name) = @_;
+    my ($read, $data) = ();
+    my $dest = $self->param('image_dir').$name;
+    open (OUTPUT, ">", $dest) or die "Access denied: $dest";
+    binmode OUTPUT;
+    while(($read = read($image, $data, 512))!=0){
+        print OUTPUT $data;
+    }
+    close OUTPUT;
+}
+sub delete_files{
+    foreach $_(@_){
+        unlink $_ or die "Can't delete file: $_ \n$!";
+    }
+}
+sub print_debug(){
+    my $s = "";
+    #-- check if running as root
+    $s.="Running as root!!\n" if ( $< == 0 );
+     
+    #-- print username
+    $s.="Your username is " . (getpwuid($<))[0] . "\n";
+     
+    #-- print groups information
+    my @groups = split '\s', $(;
+    $s.="You belong to these groups: ";
+    $s.= getgrgid($_) . " " foreach(@groups);
+    $s.= "\n";
+    die $s;
+}
 require('Membership.pl');
 require('Topic.pl');
+require('Thread.pl');
+require('Reply.pl');
 
 1;
+

@@ -59,7 +59,15 @@
           </td>
         </tr>
         <!--/MESSAGE BODY-->
-        <!--MESSAGE BODY-->
+        <!--IMAGE-->
+        <tmpl_if thread_image_url>
+            <tr>
+                <td colspan="3">
+                  <a href="/<tmpl_var thread_image_url>"><img src="/<tmpl_var thread_image_url>" style="max-height: 200px"/></a>
+                </td>
+            </tr>    
+        </tmpl_if>
+        <!-- /IMAGE-->
         <tr>
           <td colspan="3" style="text-align: right">
               
@@ -134,6 +142,15 @@
           </td>
         </tr>
         <!--/MESSAGE BODY-->
+        <!--IMAGE-->
+        <tmpl_if post_image_url>
+            <tr>
+                <td colspan="3">
+                  <a href="/<tmpl_var post_image_url>"><img src="/<tmpl_var post_image_url>" style="max-height: 200px"/></a>
+                </td>
+            </tr>    
+        </tmpl_if>
+        <!-- /IMAGE-->
         <!--MESSAGE BODY-->
         <tr>
           <td colspan="3" style="text-align: right">

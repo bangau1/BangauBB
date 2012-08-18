@@ -1,0 +1,54 @@
+<tmpl_include name="../layout/header.tmpl">
+<!-- Masthead
+================================================== -->
+<!--<header class="jumbotron subhead" id="overview" style="margin:100px;">
+  <h1>Register</h1>
+  <p class="lead">A preview of changes in this swatch.</p>
+</header>
+-->
+
+<div class="container" style="margin-top:80px">
+ <h1>Confirm</h1>   <!-- Forms
+================================================== -->
+<section id="column">
+  <div class="table">
+    <table class="table well">
+      <tbody>        
+        <!--MESSAGE BODY-->
+        <tr>
+          <td  colspan="3">
+            <h3><tmpl_var name="thread_title"></h3>
+            <p>
+              <tmpl_var name="thread_post">
+            </p>
+          </td>
+        </tr>
+        <!--/MESSAGE BODY-->
+        <tmpl_if thread_image_url>
+            <tr>
+                <td>
+                  <img src="/<tmpl_var thread_image_url>"/>
+                </td>
+            </tr>    
+        </tmpl_if>
+        
+      </tbody>
+      
+    </table>
+  </div>
+
+</section>
+<form  method="post">
+    <input type="hidden" name="rm" value="create_thread_post">
+    <input type="hidden" name="topic_id" value="<tmpl_var topic_id>">
+    <input type="hidden" name="title" value="<tmpl_var thread_title>">
+    <input type="hidden" name="post" value="<tmpl_var thread_hidden_post>">
+    <tmpl_if image_id>
+        <input type="hidden" name="image_id" value="<tmpl_var image_id>">    
+    </tmpl_if>
+    <input type="submit" value="Yes" class="btn btn-danger">
+</form>
+</div>
+
+<tmpl_include name="../layout/footer.tmpl">
+  

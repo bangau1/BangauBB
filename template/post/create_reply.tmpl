@@ -14,18 +14,18 @@
 <section id="forms">
     
   <div class="page-header">
-    <h1>Reply</h1>
+    <h1>New Reply</h1>
   </div>
 
   <div class="row">
     <div class="span7 offset1">
 
 
-      <form class="form-horizontal well" method="POST" id="form_reg">
+      <form class="form-horizontal well" method="POST" id="form_reg" enctype="multipart/form-data">
         
         <fieldset>
           <!--<legend>Controls Bootstrap supports</legend>-->
-          <input type="hidden" name="rm" value="create_reply_post"/>
+          <input type="hidden" name="rm" value="create_reply_confirm"/>
 	  <input type="hidden" name="thread_id" value="<tmpl_var name="thread_id">">
           <div class="control-group" id="div_title">
             <label class="control-label" for="input_title">Title</label>

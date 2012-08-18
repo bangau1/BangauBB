@@ -13,12 +13,17 @@
   <div class="page-header">
     <h1>Topic</h1>
   </div>
-  <tmpl_if name="is_admin">
-    <div class="table">
-    <a class="btn" href="./index.pl?rm=create_topic">New Topic</a>  
-    </div>  
-  </tmpl_if>
   
+<div class="table">
+  <tmpl_if name="is_admin">
+    <a class="btn" href="./index.pl?rm=create_topic">New Topic</a>  
+   
+  </tmpl_if>
+  <div style="float:right">
+    <tmpl_include name="../layout/pagination.tmpl">  
+  </div>
+  
+   </div>
   
   <table class="table table-bordered table-striped">
     <thead>
@@ -83,8 +88,9 @@
         -->
     </tbody>
   </table>
-  <br/>
-  <tmpl_include name="../layout/pagination.tmpl">
+  <div style="float:right">
+    <tmpl_include name="../layout/pagination.tmpl">  
+  </div>
 
 </section>
 </div>

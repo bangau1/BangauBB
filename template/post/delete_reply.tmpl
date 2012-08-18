@@ -8,13 +8,12 @@
 -->
 
 <div class="container" style="margin-top:80px">
-    <tmpl_include name="../layout/breadcrumbs.tmpl">
     <!-- Forms
 ================================================== -->
 <section id="column">
-  <h3>Delete reply</h3>
+  <h3>Delete Reply</h3>
   <tmpl_loop posts>
-  <div class="row" id="div-post-<tmpl_var name="post_id">">
+  <div class="table" id="div-post-<tmpl_var post_id>">
     <table class="table well">
       <tbody>
         <tr>
@@ -58,6 +57,15 @@
           </td>
         </tr>
         <!--/MESSAGE BODY-->
+        <!--IMAGE-->
+        <tmpl_if post_image_url>
+            <tr>
+                <td colspan="3">
+                  <a href="/<tmpl_var post_image_url>"><img src="/<tmpl_var post_image_url>" style="max-height: 200px"/></a>
+                </td>
+            </tr>    
+        </tmpl_if>
+        <!-- /IMAGE-->
       </tbody>
       
     </table>

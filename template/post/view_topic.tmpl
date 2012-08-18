@@ -15,16 +15,16 @@
   </div>
   
   <tmpl_if name="is_admin">
-    <div class="table">
-    <a class="btn" href="./index.pl?rm=create_thread&t=<tmpl_var name="topic_id">">New Thread</a>
-    </div>
+    <a class="btn" href="./index.pl?rm=create_thread&topic_id=<tmpl_var name="topic_id">">New Thread</a>
   </tmpl_if>
   <tmpl_if name="is_user">
     <div class="table">
-    <a class="btn" href="./index.pl?rm=create_thread&t=<tmpl_var name="topic_id">">New Thread</a>
+    <a class="btn" href="./index.pl?rm=create_thread&topic_id=<tmpl_var name="topic_id">">New Thread</a>
     </div>
   </tmpl_if>
-  
+  <div style="float:right">
+    <tmpl_include name="../layout/pagination.tmpl">  
+  </div>
   
   <table class="table table-bordered table-striped">
     <thead>
@@ -38,7 +38,7 @@
         <tmpl_loop name="threads">
             <tr>
                 <td>
-                <a href="./index.pl?rm=view_thread&amp;t=<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
+                <a href="./index.pl?rm=view_thread&amp;t=<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a> <tmpl_if new_reply><span class="label label-success">new reply</span></tmpl_if>
                 </br>
                 by <a href="./index.pl?rm=view_user&amp;username=<tmpl_var name="thread_creator_username">"><tmpl_var name="thread_creator_username"></a>
                 <br/>
@@ -89,8 +89,9 @@
         -->
     </tbody>
   </table>
-  <br/>
-  <tmpl_include name="../layout/pagination.tmpl">
+  <div style="float:right">
+    <tmpl_include name="../layout/pagination.tmpl">  
+  </div>
 
 </section>
 </div>

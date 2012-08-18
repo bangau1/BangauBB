@@ -21,11 +21,11 @@
     <div class="span7 offset1">
 
 
-      <form class="form-horizontal well" method="POST" id="form_reg">
+      <form class="form-horizontal well" method="POST" id="form_reg" enctype="multipart/form-data">
         
         <fieldset>
           <!--<legend>Controls Bootstrap supports</legend>-->
-          <input type="hidden" name="rm" value="create_thread_post"/>
+          <input type="hidden" name="rm" value="create_thread_confirm"/>
 	  <input type="hidden" name="topic_id" value="<tmpl_var name="topic_id">">
           <div class="control-group" id="div_title">
             <label class="control-label" for="input_title">Title*</label>
