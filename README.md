@@ -1,2 +1,2 @@
-BangauBB
+BangauBB, Perl Based Bulletin Board
 ========
