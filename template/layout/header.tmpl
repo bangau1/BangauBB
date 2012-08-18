@@ -13,7 +13,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="../res/theme/<tmpl_var theme default="united">/bootstrap.css" rel="stylesheet">
+    <link href="../res/theme/<tmpl_var theme default="slate">/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../res/font-awesome/css/font-awesome.css">
     <!--<link href="../res/theme/readable/bootstrap.css" rel="stylesheet">-->
     <!-- <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">-->
@@ -62,15 +62,15 @@
               <form class="navbar-search" method="post">
                 
                 <tmpl_if name="user">
-                    Welcome, <tmpl_var name="user">
-                    <a href="./index.pl?rm=logout" class="btn btn-danger">Logout</a>
+                    <strong>Welcome, <tmpl_var name="user"></strong>
+                    <a href="./index.pl?rm=logout" class="btn btn-danger">ログアウト</a>
                 <tmpl_else>
                     Welcome, Guest!
                       <input type="hidden" name="rm" value="login_post"/>
                       <input type="text" class="search-query span2" placeholder="username" name="username">
                       <input type="password" class="search-query span2" placeholder="password" name="password">
-                      <button type="submit" class="btn btn-success">Login</button>
-                      <a href="./index.pl?rm=register" class="btn btn-primary">Join</a>
+                      <button type="submit" class="btn btn-success">合計応答</button>
+                      <a href="./index.pl?rm=register" class="btn btn-primary">会員登録</a>
                 </tmpl_if>
               </form>
               

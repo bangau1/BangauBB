@@ -172,6 +172,13 @@ sub view_thread_rm{
         if($ref->{'thread_image_id'}){
             $ref->{'thread_image_url'} = $self->param('image_dir_url').$ref->{'thread_image_id'};
         }
+        if($ref->{'thread_creator_role'} eq 'a'){
+            $ref->{'thread_creator_role'} = 'admin';
+        }elsif($ref->{'thread_creator_role'} eq 'u'){
+            $ref->{'thread_creator_role'} = 'user';
+        }else{
+            $ref->{'thread_creator_role'} = 'guest';
+        }
         push @thread, $ref;
     }
     
@@ -210,6 +217,13 @@ sub view_thread_rm{
         
         if($ref->{'post_image_id'}){
             $ref->{'post_image_url'} = $self->param('image_dir_url').$ref->{'post_image_id'};
+        }
+        if($ref->{'post_creator_role'} eq 'a'){
+            $ref->{'post_creator_role'} = 'admin';
+        }elsif($ref->{'post_creator_role'} eq 'u'){
+            $ref->{'post_creator_role'} = 'user';
+        }else{
+            $ref->{'post_creator_role'} = 'guest';
         }
     }
     #ENDING
@@ -330,4 +344,3 @@ sub delete_thread_rm{
     return $tmpl->output();
 }
 1;
-

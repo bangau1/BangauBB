@@ -10,10 +10,10 @@
 <div class="container" style="margin-top:80px">
     <tmpl_include name="../layout/breadcrumbs.tmpl">
     <section id="buttons">
-  <div class="page-header">
-    <h1>Topic</h1>
-  </div>
   
+  <div class="page-header">
+    <h1>トピック</h1>
+  </div>
 <div class="table">
   <tmpl_if name="is_admin">
     <a class="btn" href="./index.pl?rm=create_topic">New Topic</a>  
@@ -27,11 +27,11 @@
   
   <table class="table table-bordered table-striped">
     <thead>
-      <tr style="">
-        <th>Topic</th>
-        <th>Latest Modified</th>
-        <th>Total Thread</th>
-        <th>Total Post</th>
+      <tr>
+        <th style="text-align: center">トピック</th>
+        <th style="text-align: center">最新投稿のスレッド</th>
+        <th style="text-align: center">合計スレッド</th>
+        <th style="text-align: center">合計応答</th>
       </tr>
     </thead>
     <tbody>
@@ -42,12 +42,13 @@
                 </td>
                 <td>
                 <tmpl_if name="thread_title">
+                    タイトル: 
                     <a href="./index.pl?rm=view_thread&amp;t=<tmpl_var name="thread_id">"><tmpl_var name="thread_title"></a>
                     <br/>
                     by <tmpl_if name="user">
                             <a href="#"><tmpl_var name="user"></a>
                         <tmpl_else>
-                            guest
+                            Guest
                         </tmpl_if>
                     </br>
                     <tmpl_var date_modified>

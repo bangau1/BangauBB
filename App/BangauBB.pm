@@ -105,13 +105,21 @@ sub passCredential_Session{
         $self->session->param('role', 'g');
     }
     given($self->session->param('role')){
-        when('a'){ $templRef->param('is_admin' => 'true')}
-        when('u'){ $templRef->param('is_user' => 'true')}
-        default {$templRef->param('is_guest' => 'true')};
+        when('a'){
+            $templRef->param('is_admin' => 'true');
+            $templRef->param('role' => 'admin');
+        }
+        when('u'){
+            $templRef->param('is_user' => 'true');
+            $templRef->param('role' => 'user');
+        }
+        default {
+            $templRef->param('is_guest' => 'true');
+            $templRef->param('role' => 'guest');
+        };
     }
     if($self->session->param('user')){
         $templRef->param('user' => $self->session->param('user'));
-        $templRef->param('role' => $self->session->param('role'));
         $templRef->param('uid' => $self->session->param('uid'));
         return 1;
     }
@@ -173,4 +181,3 @@ require('Thread.pl');
 require('Reply.pl');
 
 1;
-
