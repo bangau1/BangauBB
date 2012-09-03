@@ -21,7 +21,7 @@ use BangauBB;
 BEGIN{
     sub handle_errors{
         my $msg = shift;
-        print "<h1>Oh sh*t</h1>";
+        print "<h1>Oh got an error :(</h1>";
         print "<p>Got an error: $msg</p>";
     }
     set_message(\&handle_errors);
